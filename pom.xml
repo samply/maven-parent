@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.samply</groupId>
     <artifactId>parent</artifactId>
-    <version>11.0.0-SNAPSHOT</version>
+    <version>11.0.0</version>
     <name>The root maven POM artifact for Samply Projects</name>
     <packaging>pom</packaging>
 
@@ -26,13 +26,11 @@
         <version.maven.plugin.war>3.2.3</version.maven.plugin.war> <!-- aktuell: 3.3.1 -->
         <version.maven.plugin.jar>3.1.2</version.maven.plugin.jar> <!-- aktuell: 3.2.0 -->
         <version.maven.plugin.compiler>3.8.1</version.maven.plugin.compiler> <!-- ist aktuell -->
-        <version.maven.plugin.release>2.5.3</version.maven.plugin.release> <!-- ist aktuell / oder 3.0.0-M1 -->
         <version.maven.plugin.surefire>2.22.2</version.maven.plugin.surefire> <!-- ist aktuell / oder 3.0.0-M5 -->
         <version.maven.plugin.source>3.1.0</version.maven.plugin.source> <!-- aktuell: 3.2.1 -->
         <version.maven.plugin.site>3.8.2</version.maven.plugin.site> <!-- aktuell: 3.9.1 -->
         <version.maven.plugin.wagon-webdav-jackrabbit>3.3.3
         </version.maven.plugin.wagon-webdav-jackrabbit>  <!-- aktuell: 3.4.1 -->
-        <version.maven.plugin.javadoc>3.1.1</version.maven.plugin.javadoc> <!-- aktuell: 3.2.0 -->
         <version.maven.plugin.enforcer>1.4.1</version.maven.plugin.enforcer> <!-- ist aktuell / oder 3.0.0-M3 -->
         <version.maven.plugin.checkstyle>3.1.0</version.maven.plugin.checkstyle> <!-- aktuell: 3.1.1 -->
         <!--
@@ -88,13 +86,8 @@
                 TODO: Move this information to a suitable wiki
         -->
 
-        <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version> <!-- ist aktuell -->
-        <gmaven-plugin.version>1.0</gmaven-plugin.version>  <!-- aktuell: 1.5 -->
         <license-maven-plugin.version>2.11</license-maven-plugin.version>  <!-- aktuell: 3.0 oder 4.0-rc2 -->
-        <version.animal.sniffer.annotations>1.16</version.animal.sniffer.annotations>  <!-- aktuell: 1.19 -->
 
-        <maven-project-info-reports-plugin.version>3.1.1
-        </maven-project-info-reports-plugin.version> <!-- aktuell: 3.1.1 -->
     </properties>
 
     <organization>
@@ -102,10 +95,7 @@
     </organization>
 
     <scm>
-        <!-- TODO: Refer to github
-        <connection>scm:git:git://github.com/samply.maven.parent</connection>
-        -->
-        <connection>scm:git:https://code.mitro.dkfz.de/scm/com/samply.maven</connection>
+        <connection>scm:git:git://github.com/samply/maven-parent</connection>
     </scm>
 
     <dependencyManagement>
@@ -131,16 +121,6 @@
             <!-- Those plugins are optional and are not included as dependencies by default -->
 
             <plugins>
-                <!-- TODO: Remove - Jarkarta does not apply to all projects -->
-                <!--
-                                <plugin>
-                                    <groupId>org.eclipse.jetty</groupId>
-                                    <artifactId>jetty-maven-plugin</artifactId>
-                                    <version>9.4.7.v20170914</version>
-                                </plugin>
-                -->
-
-                <!-- TODO: Decide if plugin from HD should remain included -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
@@ -220,7 +200,6 @@
                         <manifestEntries>
                             <Build-Timestamp>${maven.build.timestamp}</Build-Timestamp>
                             <SCM-Version>${buildNumber}</SCM-Version>
-                            <!-- TODO: Bugfix scmBranch entries-->
                             <SCM-Branch>${scmBranch}</SCM-Branch>
                         </manifestEntries>
                     </archive>
@@ -259,12 +238,6 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>${version.maven.plugin.release}</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${version.maven.plugin.surefire}</version>
             </plugin>
@@ -283,31 +256,12 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>${version.maven.plugin.site}</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.wagon</groupId>
-                        <artifactId>wagon-webdav-jackrabbit</artifactId>
-                        <version>2.6</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${version.maven.plugin.javadoc}</version>
-            </plugin>
-
             <!-- This plugin allows to check for snapshot dependencies for release version! -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <version>${version.maven.plugin.enforcer}</version>
                 <configuration>
-                    <!-- TODO: Decide if this rule (defined in HD) is neccessary-->
                     <rules>
                         <requireReleaseDeps>
                             <onlyWhenRelease>true</onlyWhenRelease>
@@ -322,43 +276,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>${version.maven.plugin.dependency}</version>
-            </plugin>
-
-            <!-- TODO: Decide if plugin from HD should remain included -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-eclipse-plugin</artifactId>
-                <version>${maven-eclipse-plugin.version}</version>
-                <configuration>
-                    <downloadSources>true</downloadSources>
-                    <downloadJavadocs>true</downloadJavadocs>
-                </configuration>
-            </plugin>
-
-            <!-- Creating current year element -->
-            <!-- TODO: Decide if plugin from HD should remain included -->
-            <plugin>
-                <groupId>org.codehaus.groovy.maven</groupId>
-                <artifactId>gmaven-plugin</artifactId>
-                <version>${gmaven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                        <configuration>
-                            <!--suppress GroovyAssignabilityCheck -->
-                            <source>
-                                import java.util.Date
-                                import java.text.MessageFormat
-
-                                def vartimestamp = MessageFormat.format("{0,date,yyyy}", new Date())
-                                project.properties['currentYear'] = vartimestamp
-                            </source>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
 
             <!-- Allows to check the files in the project for the correct license headers -->
@@ -382,60 +299,8 @@
                     </excludes>
                 </configuration>
             </plugin>
-
-            <!-- This plugin enforces the usage of Java 1.8 only, so no classes from Java 1.9 are allowed -->
-            <!-- TODO: Decide if plugin from HD should remain included -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>animal-sniffer-maven-plugin</artifactId>
-                <version>${version.animal.sniffer.annotations}</version>
-                <configuration>
-                    <signature>
-                        <groupId>org.codehaus.mojo.signature</groupId>
-                        <artifactId>java18</artifactId>
-                        <version>1.0</version>
-                    </signature>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>ensure-java-1.8-class-library</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
-
-    <!-- TODO: Decide if <reporting> from HD should remain included -->
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>${maven-project-info-reports-plugin.version}</version>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-                <configuration>
-                    <!-- TODO: Remove Invalid parameter
-                        <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
-                    -->
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${version.maven.plugin.javadoc}</version>
-            </plugin>
-        </plugins>
-    </reporting>
 
     <profiles>
         <profile>
@@ -448,15 +313,6 @@
             </activation>
             <build>
                 <plugins>
-                    <!-- TODO: Remove - Jarkarta does not apply to all projects -->
-                    <!--
-                                    <plugin>
-                                        <groupId>org.eclipse.jetty</groupId>
-                                        <artifactId>jetty-maven-plugin</artifactId>
-                                    </plugin>
-                    -->
-
-                    <!-- TODO: Decide if plugin from HD should remain included -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
