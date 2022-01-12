@@ -360,6 +360,13 @@
                         <goals>
                             <goal>sign</goal>
                         </goals>
+                        <configuration>
+                          <!-- Needed for ci, otherwise gpg will request for pin in a non interactive session -->
+                          <gpgArguments>
+                            <arg>--pinentry-mode</arg>
+                            <arg>loopback</arg>
+                          </gpgArguments>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
